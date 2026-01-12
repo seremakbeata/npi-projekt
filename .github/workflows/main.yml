@@ -17,7 +17,7 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout code (WAŻNE: najpierw checkout!)
         uses: actions/checkout@v3
       
       - name: Użyj własnej akcji powitalnej
@@ -39,3 +39,4 @@ jobs:
           echo "   - Repo: ${{ github.repository }}"
           echo "   - Branch: ${{ github.ref }}"
           echo "   - Commit: ${{ github.sha }}"
+          echo "🔗 Obraz Docker: ghcr.io/${{ github.repository }}:latest"

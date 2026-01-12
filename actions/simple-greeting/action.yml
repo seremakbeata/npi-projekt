@@ -1,4 +1,4 @@
-name: 'Simple Greeting Action'
+﻿name: 'Simple Greeting Action'
 description: 'Prosta akcja powitalna dla projektu DevOps'
 author: 'Beata Seremak'
 inputs:
