@@ -17,26 +17,27 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code (WAŻNE: najpierw checkout!)
+      - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Użyj własnej akcji powitalnej
-        id: greeting
-        uses: ./actions/simple-greeting
-        with:
-          project-name: 'npi-projekt DevOps'
-          environment: 'CI/CD Pipeline'
-      
-      - name: Pokaż output z akcji
+      - name: Moja własna akcja
+        id: my-action
         run: |
-          echo "⏰ Timestamp: ${{ steps.greeting.outputs.timestamp }}"
-          echo "💬 Wiadomość: ${{ steps.greeting.outputs.greeting }}"
+          echo "🎯 ================================="
+          echo "🚀 WŁASNA AKCJA GITHUB ACTIONS"
+          echo "📅 Data: $(date)"
+          echo "👤 Autor: ${{ github.actor }}"
+          echo "📁 Repo: ${{ github.repository }}"
+          echo "🔗 Commit: ${{ github.sha }}"
+          echo "🎯 ================================="
+          
+          echo "action-name=custom-devops-action" >> $GITHUB_OUTPUT
+          echo "executed-at=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "status=success" >> $GITHUB_OUTPUT
       
-      - name: Dodatkowa logika po akcji
+      - name: Pokaż wyniki
         run: |
-          echo "✅ Własna akcja wykonana pomyślnie!"
-          echo "📊 Statystyki:"
-          echo "   - Repo: ${{ github.repository }}"
-          echo "   - Branch: ${{ github.ref }}"
-          echo "   - Commit: ${{ github.sha }}"
-          echo "🔗 Obraz Docker: ghcr.io/${{ github.repository }}:latest"
+          echo "✅ Akcja wykonana pomyślnie!"
+          echo "📝 Nazwa: ${{ steps.my-action.outputs.action-name }}"
+          echo "⏰ Czas: ${{ steps.my-action.outputs.executed-at }}"
+          echo "📊 Status: ${{ steps.my-action.outputs.status }}"
