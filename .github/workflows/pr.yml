@@ -1,0 +1,9 @@
+name: PR Pipeline
+on: [pull_request]
+
+jobs:
+  test:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      should_build: false
+      should_push: false

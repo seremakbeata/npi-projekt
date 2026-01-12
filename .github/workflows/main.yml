@@ -1,0 +1,11 @@
+name: Main Pipeline
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      should_build: true
+      should_push: true
