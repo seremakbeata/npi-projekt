@@ -12,3 +12,30 @@ jobs:
     permissions:
       packages: write
       contents: read
+
+  custom-action-demo:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Użyj własnej akcji powitalnej
+        id: greeting
+        uses: ./actions/simple-greeting
+        with:
+          project-name: 'npi-projekt DevOps'
+          environment: 'CI/CD Pipeline'
+      
+      - name: Pokaż output z akcji
+        run: |
+          echo "⏰ Timestamp: ${{ steps.greeting.outputs.timestamp }}"
+          echo "💬 Wiadomość: ${{ steps.greeting.outputs.greeting }}"
+      
+      - name: Dodatkowa logika po akcji
+        run: |
+          echo "✅ Własna akcja wykonana pomyślnie!"
+          echo "📊 Statystyki:"
+          echo "   - Repo: ${{ github.repository }}"
+          echo "   - Branch: ${{ github.ref }}"
+          echo "   - Commit: ${{ github.sha }}"

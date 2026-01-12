@@ -1,0 +1,49 @@
+name: 'Simple Greeting Action'
+description: 'Prosta akcja powitalna dla projektu DevOps'
+author: 'Beata Seremak'
+inputs:
+  project-name:
+    description: 'Nazwa projektu'
+    required: true
+    default: 'DevOps Project'
+  environment:
+    description: 'Środowisko'
+    required: false
+    default: 'production'
+outputs:
+  timestamp:
+    description: 'Znacznik czasu wykonania'
+    value: ${{ steps.timestamp.outputs.time }}
+  greeting:
+    description: 'Wiadomość powitalna'
+    value: ${{ steps.greet.outputs.message }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Wyświetl powitanie
+      id: greet
+      run: |
+        echo "🎉 ========================================="
+        echo "🚀 ${{ inputs.project-name }}"
+        echo "🌍 Środowisko: ${{ inputs.environment }}"
+        echo "👤 Wykonane przez: ${{ github.actor }}"
+        echo "📌 Repozytorium: ${{ github.repository }}"
+        echo "🔗 SHA: ${{ github.sha }}"
+        echo "🎉 ========================================="
+        
+        # Ustaw output
+        echo "message=Witaj w ${{ inputs.project-name }}!" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Generuj timestamp
+      id: timestamp
+      run: |
+        echo "time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Sprawdź czy to release
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        echo "🏷️ To jest release! Tag: ${GITHUB_REF#refs/tags/}"
+      shell: bash
