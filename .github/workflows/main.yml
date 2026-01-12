@@ -9,3 +9,6 @@ jobs:
     with:
       should_build: true
       should_push: true
+    permissions:
+      packages: write
+      contents: read

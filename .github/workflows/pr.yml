@@ -2,7 +2,7 @@ name: PR Pipeline
 on: [pull_request]
 
 jobs:
-  test:
+  test-only:
     uses: ./.github/workflows/reusable.yml
     with:
       should_build: false
